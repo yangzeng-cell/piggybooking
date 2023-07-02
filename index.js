@@ -5,8 +5,11 @@ const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
 const { init: initDB, Counter } = require("./db");
+const query = require("./query");
 
 const router = new Router();
+
+query();
 
 const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
 
