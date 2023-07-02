@@ -15,6 +15,16 @@ router.get("/", async (ctx) => {
   ctx.body = homePage;
 });
 
+router.post("/add", async (ctx) => {
+  const { request } = ctx;
+  const { prarms } = request.body;
+
+  ctx.body = {
+    code: 200,
+    data: prarms,
+  };
+});
+
 // 更新计数
 router.post("/api/count", async (ctx) => {
   const { request } = ctx;
