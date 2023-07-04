@@ -5,11 +5,9 @@ const bodyParser = require("koa-bodyparser");
 const fs = require("fs");
 const path = require("path");
 const { init: initDB, Counter } = require("./db");
-const query = require("./query");
+const { connection } = require("./query");
 
 const router = new Router();
-
-query();
 
 const homePage = fs.readFileSync(path.join(__dirname, "index.html"), "utf-8");
 
@@ -18,14 +16,37 @@ router.get("/", async (ctx) => {
   ctx.body = homePage;
 });
 
+router.post("/login", async (ctx) => {
+  const { request } = ctx;
+  const { prarms } = request.body;
+  if (prarms.pwd && prarms.user) {
+    if (prarms.pwd === "258425" && prarms.user === "piggy") {
+      ctx.body = {
+        code: 200,
+        data: "登录成功",
+      };
+    } else {
+      ctx.body = {
+        code: 200,
+        data: "登录失败",
+      };
+    }
+  }
+});
+
 router.post("/add", async (ctx) => {
   const { request } = ctx;
   const { prarms } = request.body;
-
-  ctx.body = {
-    code: 200,
-    data: prarms,
-  };
+  const { type, money, time, remark } = prarms;
+  if (type & money & time & remark) {
+    const statement =
+      "INSERT INTO biggy_bookings (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
+    const [results, fields] = await connection
+      .promise()
+      .execute(statement, ["piggy", type, money, time, remark]);
+    console.log("数据库执行:", results);
+    ctx.body = { results, fields };
+  }
 });
 
 // 更新计数

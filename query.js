@@ -1,10 +1,13 @@
 const mysql = require("mysql2");
 
+// 从环境变量中读取数据库配置
+const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
+
 const connection = mysql.createPool({
-  host: "10.35.112.189:3306",
-  database: "biggy_booking",
-  user: "yangzeng123",
-  password: "441422Yz123",
+  host: MYSQL_ADDRESS,
+  database: "biggy_bookings",
+  user: MYSQL_USERNAME,
+  password: MYSQL_PASSWORD,
   connectionLimit: 5,
 });
 
