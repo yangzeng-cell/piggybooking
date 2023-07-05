@@ -37,6 +37,16 @@ router.post("/add", async (ctx) => {
   const { request } = ctx;
   const { prarms } = request.body;
   const { type, money, time, remark } = prarms;
+  const { MYSQL_USERNAME, MYSQL_PASSWORD, MYSQL_ADDRESS = "" } = process.env;
+  console.log(
+    MYSQL_USERNAME,
+    MYSQL_PASSWORD,
+    MYSQL_ADDRESS,
+    type,
+    money,
+    time,
+    remark
+  );
   if (type & money & time) {
     const statement =
       "INSERT INTO biggy_bookings (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
