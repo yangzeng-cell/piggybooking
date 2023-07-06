@@ -47,15 +47,14 @@ router.post("/add", async (ctx) => {
     time,
     remark
   );
-  if (type & money & time) {
-    const statement =
-      "INSERT INTO bookings_list (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
-    const [results, fields] = await connection
-      .promise()
-      .execute(statement, ["piggy", type, money, time, remark]);
-    console.log("数据库执行:", results);
-    ctx.body = { results, fields };
-  }
+
+  const statement =
+    "INSERT INTO bookings_list (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
+  const [results, fields] = await connection
+    .promise()
+    .execute(statement, ["piggy", type, money, time, remark]);
+  console.log("数据库执行:", results);
+  ctx.body = { results, fields };
 });
 
 // 获取计数
