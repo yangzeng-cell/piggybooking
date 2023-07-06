@@ -49,7 +49,7 @@ router.post("/add", async (ctx) => {
   );
   if (type & money & time) {
     const statement =
-      "INSERT INTO biggy_bookings (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
+      "INSERT INTO bookings_list (user, type, money, time, remark) VALUES (?, ?, ?, ?, ?);";
     const [results, fields] = await connection
       .promise()
       .execute(statement, ["piggy", type, money, time, remark]);
